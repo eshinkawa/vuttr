@@ -4,6 +4,9 @@ import 'package:VUTTR/styles/index.dart';
 import 'package:VUTTR/widgets/card.dart';
 import 'package:VUTTR/widgets/delete_dialog.dart';
 import 'package:VUTTR/widgets/form_field.dart';
+import 'package:VUTTR/widgets/search_bar.dart';
+import 'package:VUTTR/widgets/title.dart';
+import 'package:VUTTR/widgets/tools_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +45,6 @@ class _HomeViewState extends State<HomeView> {
   }
 
   deleteTool(int id, BuildContext context) async {
-    print(id);
     loading = true;
     await _toolsController.deleteTool(id);
     tools = await _toolsController.getAllTools();
@@ -51,12 +53,18 @@ class _HomeViewState extends State<HomeView> {
     Navigator.of(context).pop();
   }
 
+  addTool(Tool toolItem) async {
+    loading = true;
+    await _toolsController.addTool(toolItem);
+  }
+
   deleteConfirmation(String title, int id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return DeleteDialog(
-            title: title, onPressed: () => deleteTool(id, context),
+          title: title,
+          onPressed: () => deleteTool(id, context),
         );
       },
     );
@@ -116,7 +124,16 @@ class _HomeViewState extends State<HomeView> {
                     fontFamily: Font.FONT_FAMILY,
                     fontWeight: FontWeight.w600,
                   )),
-              onPressed: () {},
+              onPressed: () {
+                addTool(
+                  Tool(
+                    title: _name,
+                    description: _description,
+                    link: _link,
+                    tags: _tag.split(" "),
+                  ),
+                );
+              },
             )
           ],
         );
@@ -142,95 +159,31 @@ class _HomeViewState extends State<HomeView> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'VUTTR',
-                      style: TextStyle(
-                          fontSize: 48.0,
-                          fontFamily: Font.FONT_FAMILY,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 0.8, color: Colors.white),
-                      borderRadius: BorderRadius.circular(32.0)),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 7,
-                        child: TextFormField(
-                          onChanged: (query) => queryTool(query),
-                          keyboardType: TextInputType.text,
-                          autofocus: false,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontFamily: Font.FONT_FAMILY,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.search, color: Colors.white),
-                            hintText: 'search',
-                            hintStyle: TextStyle(color: Colors.white),
-                            contentPadding: EdgeInsets.all(0.0),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(32.0)),
-                          ),
-                          // validator: FormValidator().validateEmail,
-                          onSaved: (String value) {},
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Row(
-                          children: [
-                            Text('only tags',
-                                style: TextStyle(
-                                    fontFamily: Font.FONT_FAMILY,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white)),
-                            Checkbox(
-                              checkColor: Colors.white, // color of tick Mark
-                              activeColor: Colors.grey,
-                              value: isOnlyTags,
-                              onChanged: (bool value) {
-                                isOnlyTags = value;
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                HeaderTitle(),
+                SearchBar(
+                  isOnlyTags: isOnlyTags,
+                  onChangeText: (query) => queryTool(query),
+                  onChangeCheckbox: (bool value) {
+                    isOnlyTags = value;
+                    setState(() {});
+                  },
                 ),
                 Container(
                   child: loading
                       ? Center(child: CupertinoActivityIndicator())
                       : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: tools.length,
-                    itemBuilder: (context, index) =>
-                        ToolCard(
-                            title: tools[index].title,
-                            description: tools[index].description,
-                            tags: tools[index].tags,
-                            link: tools[index].link,
-                            onDelete: () =>
-                                deleteConfirmation(
-                                  tools[index].title,
-                                  tools[index].id,
-                                )),
-                  ),
+                          shrinkWrap: true,
+                          itemCount: tools.length,
+                          itemBuilder: (context, index) => ToolCard(
+                              title: tools[index].title,
+                              description: tools[index].description,
+                              tags: tools[index].tags,
+                              link: tools[index].link,
+                              onDelete: () => deleteConfirmation(
+                                    tools[index].title,
+                                    tools[index].id,
+                                  )),
+                        ),
                 ),
               ],
             ),

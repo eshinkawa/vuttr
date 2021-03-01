@@ -9,6 +9,7 @@ class ToolsController {
   String baseUrl = Platform.isIOS
       ? ApiConstants.BASE_URL_IOS
       : ApiConstants.BASE_URL_ANDROID;
+
   Future<List<Tool>> getAllTools() async {
     try {
       List<Tool> listTools = [];
@@ -75,6 +76,24 @@ class ToolsController {
     } catch (error) {
       print("Error loading tools" + error.toString());
       return 'Item with id ${id} was not deleted';
+    }
+  }
+
+  Future<String> addTool(Tool toolItem) async {
+    try {
+      final response = await http.post(
+        baseUrl,
+        body: toolItem.toJson(),
+      );
+      if (response.statusCode == 200) {
+        return 'Item created successfully';
+      } else {
+        print("Error loading tools" + response.statusCode.toString());
+        return 'Item not created';
+      }
+    } catch (error) {
+      print("Error loading tools" + error.toString());
+      return 'Item not created';
     }
   }
 }
