@@ -22,7 +22,7 @@ class ToolCard extends StatelessWidget {
     return InkWell(
       onTap: () async => await launch(link),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         child: Card(
           color: Color(0xFF3D3D3D).withOpacity(0.1),
           shape: BeveledRectangleBorder(
@@ -32,13 +32,17 @@ class ToolCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                trailing: IconButton(color: Colors.white, icon: Icon(Icons.close), onPressed: onDelete),
+                trailing: IconButton(
+                    key: const Key('DeleteCardIcon'),
+                    color: Colors.white,
+                    icon: Icon(Icons.close),
+                    onPressed: onDelete),
                 title: Text(title,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 24,
                         fontFamily: Font.FONT_FAMILY,
-                        fontWeight: FontWeight.w900)),
+                        fontWeight: FontWeight.w700)),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(

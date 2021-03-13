@@ -16,6 +16,8 @@ dependencies:
   url_launcher: ^5.7.10
 
 dev_dependencies:
+  integration_test: ^1.0.1
+  test: any
   flutter_test:
     sdk: flutter
 

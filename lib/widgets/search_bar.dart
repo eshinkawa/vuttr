@@ -15,6 +15,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: const Key('SearchbarWidget'),
       padding: EdgeInsets.all(8.0),
       margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       decoration: BoxDecoration(
@@ -25,6 +26,7 @@ class SearchBar extends StatelessWidget {
           Expanded(
             flex: 7,
             child: TextFormField(
+              key: const Key('SearchInputKey'),
               onChanged: onChangeText,
               keyboardType: TextInputType.text,
               autofocus: false,
@@ -57,6 +59,7 @@ class SearchBar extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Colors.white)),
                 Checkbox(
+                  key: const Key('Checkbox'),
                   checkColor: Colors.white, // color of tick Mark
                   activeColor: Colors.grey,
                   value: isOnlyTags,

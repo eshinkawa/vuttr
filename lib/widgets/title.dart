@@ -10,6 +10,7 @@ class HeaderTitle extends StatelessWidget {
         alignment: Alignment.topLeft,
         child: Text(
           'VUTTR',
+          key: const Key('AppName'),
           style: TextStyle(
               fontSize: 48.0,
               fontFamily: Font.FONT_FAMILY,

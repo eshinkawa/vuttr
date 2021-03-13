@@ -33,6 +33,7 @@ class DeleteDialog extends StatelessWidget {
           },
         ),
         ElevatedButton(
+          key: const Key('ConfirmDeleteButton'),
           style: ElevatedButton.styleFrom(
             primary: Colors.red, // background
             onPrimary: Colors.white, // foreground
