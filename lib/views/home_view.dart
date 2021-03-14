@@ -156,53 +156,48 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        unselectedWidgetColor: Colors.white, // <-- your color
-      ),
-      home: Scaffold(
-        backgroundColor: Color(0xFF2E3136),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                HeaderTitle(),
-                SearchBar(
-                  isOnlyTags: isOnlyTags,
-                  onChangeText: (query) => queryTool(query),
-                  onChangeCheckbox: (bool value) {
-                    isOnlyTags = value;
-                    setState(() {});
-                  },
-                ),
-                Container(
-                  child: loading
-                      ? Center(child: CupertinoActivityIndicator())
-                      : ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: tools.length,
-                          itemBuilder: (context, index) => ToolCard(
-                              title: tools[index].title,
-                              description: tools[index].description,
-                              tags: tools[index].tags,
-                              link: tools[index].link,
-                              onDelete: () => deleteConfirmation(
-                                    tools[index].title,
-                                    tools[index].id,
-                                  )),
-                        ),
-                ),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: Color(0xFF2E3136),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              HeaderTitle(),
+              SearchBar(
+                isOnlyTags: isOnlyTags,
+                onChangeText: (query) => queryTool(query),
+                onChangeCheckbox: (bool value) {
+                  isOnlyTags = value;
+                  setState(() {});
+                },
+              ),
+              Container(
+                child: loading
+                    ? Center(child: CupertinoActivityIndicator())
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: tools.length,
+                        itemBuilder: (context, index) => ToolCard(
+                            title: tools[index].title,
+                            description: tools[index].description,
+                            tags: tools[index].tags,
+                            link: tools[index].link,
+                            onDelete: () => deleteConfirmation(
+                                  tools[index].title,
+                                  tools[index].id,
+                                )),
+                      ),
+              ),
+            ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          key: const Key('AddToolButton'),
-          onPressed: () => addToolsDialog(),
-          child: Icon(Icons.add),
-          backgroundColor: Colors.blue,
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        key: const Key('AddToolButton'),
+        onPressed: () => addToolsDialog(),
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
       ),
     );
   }

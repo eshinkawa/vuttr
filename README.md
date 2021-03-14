@@ -1,16 +1,26 @@
 # VUTTR
 
-A new Flutter project.
+**Very Useful Tools to Remember** -  A Flutter project where you can see all the hot new dev tools!
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
+- You will need to have flutter installed. For further information:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+- You will also need to have the json-server running:
+https://gitlab.com/bossabox/challenge-fake-api/tree/master
+
+## Running the project
+
+1. You will need to have your simulator opened
+1. On the root directory run `flutter pub get`
+1. `flutter run` 
+
+## Running the e2d tests
+
+1. You will need to have your simulator opened
+1. On the root directory run `flutter drive \ --driver=test_driver/integration_test_driver.dart \
+   --target=integration_test/app_test.dart`
+
