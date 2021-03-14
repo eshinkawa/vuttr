@@ -3,10 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FormFieldTool extends StatelessWidget {
+  final String identifierKey;
   final String title;
   final Function(String text) onChange;
 
-  FormFieldTool({@required this.title, @required this.onChange});
+  FormFieldTool(
+      {@required this.identifierKey,
+      @required this.title,
+      @required this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,7 @@ class FormFieldTool extends StatelessWidget {
           ),
           SizedBox(height: 8),
           TextFormField(
+            key: Key(identifierKey),
             onChanged: onChange,
             keyboardType: TextInputType.text,
             autofocus: false,
@@ -35,7 +40,7 @@ class FormFieldTool extends StatelessWidget {
               hintStyle: TextStyle(color: Colors.white),
               contentPadding: EdgeInsets.all(12.0),
               border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
             ),
             onSaved: (String value) {},
           ),

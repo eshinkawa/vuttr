@@ -83,9 +83,17 @@ class ToolsController {
     try {
       final response = await http.post(
         baseUrl,
-        body: toolItem.toJson(),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'title': toolItem.title,
+          'description': toolItem.description,
+          'link': toolItem.link,
+          'tags': toolItem.tags,
+        }),
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return 'Item created successfully';
       } else {
         print("Error loading tools" + response.statusCode.toString());

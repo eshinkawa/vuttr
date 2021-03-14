@@ -24,7 +24,7 @@ class SearchBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 7,
+            flex: 65,
             child: TextFormField(
               key: const Key('SearchInputKey'),
               onChanged: onChangeText,
@@ -50,7 +50,7 @@ class SearchBar extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 35,
             child: Row(
               children: [
                 Text('only tags',

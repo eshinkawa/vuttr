@@ -6,7 +6,6 @@ import 'package:VUTTR/widgets/delete_dialog.dart';
 import 'package:VUTTR/widgets/form_field.dart';
 import 'package:VUTTR/widgets/search_bar.dart';
 import 'package:VUTTR/widgets/title.dart';
-import 'package:VUTTR/widgets/tools_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,6 @@ class _HomeViewState extends State<HomeView> {
   String _link;
   String _description;
   String _tag;
-  List<String> _tags;
 
   fetchData() async {
     loading = true;
@@ -56,6 +54,10 @@ class _HomeViewState extends State<HomeView> {
   addTool(Tool toolItem) async {
     loading = true;
     await _toolsController.addTool(toolItem);
+    tools = await _toolsController.getAllTools();
+    loading = false;
+    setState(() {});
+    Navigator.of(context).pop();
   }
 
   deleteConfirmation(String title, int id) {
@@ -84,6 +86,7 @@ class _HomeViewState extends State<HomeView> {
           content: Column(
             children: [
               FormFieldTool(
+                identifierKey: 'NameField',
                 title: 'Tool name',
                 onChange: (String name) {
                   _name = name;
@@ -91,13 +94,15 @@ class _HomeViewState extends State<HomeView> {
                 },
               ),
               FormFieldTool(
+                identifierKey: 'LinkField',
                 title: 'Tool link',
                 onChange: (String link) {
-                  _name = link;
+                  _link = link;
                   setState(() {});
                 },
               ),
               FormFieldTool(
+                identifierKey: 'DescriptionField',
                 title: 'Tool description',
                 onChange: (String description) {
                   _description = description;
@@ -105,6 +110,7 @@ class _HomeViewState extends State<HomeView> {
                 },
               ),
               FormFieldTool(
+                identifierKey: 'TagsField',
                 title: 'Tags',
                 onChange: (String tags) {
                   _tag = tags;
@@ -115,6 +121,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              key: const Key('AddToolConfirmButton'),
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue, // background
                 onPrimary: Colors.white, // foreground
@@ -172,6 +179,7 @@ class _HomeViewState extends State<HomeView> {
                   child: loading
                       ? Center(child: CupertinoActivityIndicator())
                       : ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: tools.length,
                           itemBuilder: (context, index) => ToolCard(
@@ -190,6 +198,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          key: const Key('AddToolButton'),
           onPressed: () => addToolsDialog(),
           child: Icon(Icons.add),
           backgroundColor: Colors.blue,

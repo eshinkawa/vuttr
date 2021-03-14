@@ -39,5 +39,33 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('fastify'), findsOneWidget);
     });
+
+    testWidgets('add tool successfully', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      final addToolButton = find.byKey(const Key('AddToolButton'));
+      await tester.tap(addToolButton);
+      await tester.pumpAndSettle();
+      final nameField = find.byKey(const Key('NameField'));
+      await tester.enterText(nameField, 'Tool Number X');
+      await tester.pumpAndSettle();
+      final linkField = find.byKey(const Key('LinkField'));
+      await tester.enterText(linkField, 'http://www.toolx.com');
+      await tester.pumpAndSettle();
+      final descriptionField = find.byKey(const Key('DescriptionField'));
+      await tester.enterText(
+          descriptionField, 'Best X Tool of the market, does a lotta stuff');
+      await tester.pumpAndSettle();
+      final tagsField = find.byKey(const Key('TagsField'));
+      await tester.enterText(tagsField, 'Tool Super Cool Fun Stuff');
+      await tester.pumpAndSettle();
+      final adAddToolConfirmButtonTool =
+          find.byKey(const Key('AddToolConfirmButton'));
+      await tester.tap(adAddToolConfirmButtonTool);
+      await tester.pumpAndSettle();
+      expect(find.text('Tool Number X'), findsOneWidget);
+      expect(find.text('Best X Tool of the market, does a lotta stuff'),
+          findsOneWidget);
+    });
   });
 }
